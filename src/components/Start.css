@@ -1,0 +1,28 @@
+.start--page {
+  padding: 40px;
+}
+
+.start--title {
+  margin: 40px;
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 700;
+  font-size: 34px;
+}
+
+.start--info {
+  font-family: "EB Garamond", serif;
+  font-weight: 400;
+  font-size: 16px;
+  margin-bottom: 25px;
+}
+
+.start--button {
+  width: 180px;
+  height: 53px;
+  font-family: "EB Garamond", serif;
+  font-weight: 500;
+  font-size: 16px;
+  background-color: #4d5b9e;
+  color: #f5f7fb;
+  border-radius: 15px;
+}
