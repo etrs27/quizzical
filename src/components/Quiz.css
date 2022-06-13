@@ -1,5 +1,7 @@
-/* .quiz--page {
-} */
+.question--container {
+  display: flex;
+  flex-direction: column;
+}
 
 .quiz--question {
   font-family: "Titillium Web", sans-serif;
@@ -9,11 +11,12 @@
 .quiz--answers {
   font-family: "EB Garamond", serif;
   font-weight: 500;
+  border: 0.79px solid #dbdef0;
 }
 
 .quiz--button {
-  width: 120px;
-  height: 35px;
+  width: 100%;
+  height: 30px;
   font-family: "EB Garamond", serif;
   font-weight: 500;
   font-size: 15px;

@@ -1,7 +1,7 @@
 import "./Quiz.css"
 
 export default function Quiz(props) {
-  const quizElements = props.questions.map((question) => {
+  const questionElements = props.questions.map((question, index) => {
     // Handle unicode or special characters
     let entities = {
       amp: "&",
@@ -16,34 +16,45 @@ export default function Quiz(props) {
       quot: '"',
     }
 
-    function decodeHTMLEntities(data) {
+    function decodeHTML(data) {
       return data.replace(/&([^;]+);/gi, function (match, entity) {
         return entities[entity] || match
       })
     }
 
-    const answerElements = question.options.map((option, index) => {
-      decodeHTMLEntities(option)
+    const answers = question.options.map((answer) => {
+      let decoded = decodeHTML(answer.value)
+      console.log(answer.selected)
+
+      const styles = {
+        backgroundColor: answer.selected ? "#59E391" : "#FFF",
+      }
+
       return (
-        <button key={index} type="button" value={option}>
-          {option}
-        </button>
+        <div
+          style={styles}
+          key={answer.id}
+          className="quiz--answers"
+          onClick={() => props.selectId(answer.id, index)}
+        >
+          {decoded}
+        </div>
       )
     })
 
     return (
-      <section className="quiz--container" key={question.id}>
-        <h3 className="quiz--question">
-          {decodeHTMLEntities(question.question)}
+      <section className="question--container">
+        <h3 className="quiz--question" key={question.id}>
+          {decodeHTML(question.question)}
         </h3>
-        <div className="quiz--answers">{answerElements}</div>
+        {answers}
       </section>
     )
   })
 
   return (
     <div className="quiz--page">
-      {quizElements}
+      <div className="quiz--container">{questionElements}</div>
       <button className="quiz--button">Check Answers</button>
     </div>
   )
