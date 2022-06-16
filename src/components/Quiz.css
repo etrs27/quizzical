@@ -1,18 +1,14 @@
-.question--container {
+.quiz--page,
+.quiz--container {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
 
-.quiz--question {
-  font-family: "Titillium Web", sans-serif;
-  font-weight: 700;
-}
-
-.quiz--answers {
-  font-family: "EB Garamond", serif;
-  font-weight: 500;
-  border: 0.79px solid #dbdef0;
-}
+/* .quiz--container {
+  display: flex;
+  flex-direction: column;
+} */
 
 .quiz--button {
   width: 100%;
