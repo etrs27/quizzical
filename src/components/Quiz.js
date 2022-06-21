@@ -6,6 +6,7 @@ import "./Quiz.css"
 
 export default function Quiz(props) {
   const [quiz, setQuiz] = React.useState([])
+  const [allAnswers, setAllAnswers] = React.useState([])
 
   React.useEffect(() => {
     async function getQuiz() {
@@ -14,14 +15,15 @@ export default function Quiz(props) {
           "https://opentdb.com/api.php?amount=7&difficulty=medium"
         )
         const data = await res.json()
-        allQuestions(data.results)
+        theQuiz(data.results)
       }
     }
     getQuiz()
   }, [props.status])
 
-  function allQuestions(data) {
+  function theQuiz(data) {
     const questions = []
+    const answers = []
 
     for (let i = 0; i < data.length; i++) {
       let optionArr = data[i].incorrect_answers.concat(data[i].correct_answer)
@@ -29,55 +31,31 @@ export default function Quiz(props) {
         id: nanoid(),
         question: data[i].question,
         correct_answer: data[i].correct_answer,
-        options: [],
       })
       for (let j = 0; j < optionArr.length; j++) {
-        questions[i].options.push({
+        answers.push({
           id: nanoid(),
+          question_id: questions[i].id,
           value: optionArr[j],
           selected: false,
         })
       }
       setQuiz(questions)
+      setAllAnswers(answers)
     }
   }
 
-  // ********
-  //Returning data is not mapping correctly.
-
-  function selectId(answerId) {
-    setQuiz((prevQuiz) => {
-      // prevQuiz.map((question) => {
-      //   return question.options.map((answer, index) => {
-      //     // console.log(answer.selected)
-      //     return answerId === answer.id
-      //       ? {
-      //           // ...question,
-      //           ...answer,
-      //           selected: !answer.selected,
-      //         }
-      //       : answer
-      //   })
-      // })
-      for (let i = 0; i < prevQuiz.length; i++) {
-        for (let j = 0; j < prevQuiz[i].options.length; j++) {
-          return answerId === prevQuiz[i].options[j].id
-            ? {
-                ...prevQuiz,
-                options: {
-                  ...prevQuiz[i].options,
-                  selected: !prevQuiz[i].options[j].selected,
-                },
-              }
-            : prevQuiz
-        }
-      }
-    })
+  function selectOption(answerId) {
+    setAllAnswers((prevState) =>
+      prevState.map((answer) => {
+        return answer.id === answerId
+          ? { ...answer, selected: !answer.selected }
+          : answer
+      })
+    )
   }
 
-  console.log(quiz)
-  /* ****************************** */
-  const quizElements = quiz.map((question) => {
+  const quizElements = quiz.map((question, index) => {
     // Handle unicode or special characters
     let entities = {
       amp: "&",
@@ -98,17 +76,21 @@ export default function Quiz(props) {
       })
     }
 
+    const quizAnswers = allAnswers.filter((answer) => {
+      return answer.question_id === question.id
+    })
+
     return (
-      <section className="quiz--container">
+      <section className="quiz--container" key={index}>
         <Questions
           question={question.question}
           decode={decodeHTML}
           id={question.id}
         />
         <Answers
-          answers={question.options}
+          answers={quizAnswers}
           decode={decodeHTML}
-          select={selectId}
+          select={selectOption}
         />
       </section>
     )
