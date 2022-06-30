@@ -45,10 +45,11 @@ export default function Quiz(props) {
     }
   }
 
-  function selectOption(answerId) {
+  function selectOption(answerId, checked) {
     setAllAnswers((prevState) =>
       prevState.map((answer) => {
-        return answer.id === answerId
+        return (answer.id === answerId && !checked) ||
+          (answer.id === answerId && answer.selected)
           ? { ...answer, selected: !answer.selected }
           : answer
       })
@@ -56,8 +57,14 @@ export default function Quiz(props) {
   }
 
   const quizElements = quiz.map((question, index) => {
+    const quizAnswers = allAnswers.filter((answer) => {
+      return answer.question_id === question.id
+    })
+
+    const selectCheck = quizAnswers.some((answer) => answer.selected)
+
     // Handle unicode or special characters
-    let entities = {
+    const entities = {
       amp: "&",
       apos: "'",
       "#x27": "'",
@@ -76,10 +83,6 @@ export default function Quiz(props) {
       })
     }
 
-    const quizAnswers = allAnswers.filter((answer) => {
-      return answer.question_id === question.id
-    })
-
     return (
       <section className="quiz--container" key={index}>
         <Questions
@@ -91,6 +94,7 @@ export default function Quiz(props) {
           answers={quizAnswers}
           decode={decodeHTML}
           select={selectOption}
+          selectChecker={selectCheck}
         />
       </section>
     )
