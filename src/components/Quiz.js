@@ -9,16 +9,18 @@ export default function Quiz(props) {
   const [allAnswers, setAllAnswers] = React.useState([])
 
   React.useEffect(() => {
-    async function getQuiz() {
-      if (props.status) {
+    if (props.status) {
+      async function getQuiz() {
+        // if (props.status) {
         const res = await fetch(
           "https://opentdb.com/api.php?amount=7&difficulty=medium"
         )
         const data = await res.json()
         theQuiz(data.results)
+        // }
       }
+      getQuiz()
     }
-    getQuiz()
   }, [props.status])
 
   function theQuiz(data) {
@@ -26,7 +28,12 @@ export default function Quiz(props) {
     const answers = []
 
     for (let i = 0; i < data.length; i++) {
-      let optionArr = data[i].incorrect_answers.concat(data[i].correct_answer)
+      let optionArr = data[i].incorrect_answers
+      optionArr.splice(
+        Math.floor(Math.random() * (optionArr.length + 1)),
+        0,
+        data[i].correct_answer
+      )
       questions.push({
         id: nanoid(),
         question: data[i].question,
@@ -54,6 +61,19 @@ export default function Quiz(props) {
           : answer
       })
     )
+  }
+
+  function answersChecker() {
+    const userSelection = allAnswers.filter((answer) => {
+      return answer.selected
+    })
+    const answersMatch = userSelection.map((answer, index) => {
+      return answer.value === quiz[index].correct_answer
+        ? answer.value
+        : "wrong"
+    })
+
+    console.log(answersMatch)
   }
 
   const quizElements = quiz.map((question, index) => {
@@ -103,7 +123,9 @@ export default function Quiz(props) {
   return (
     <div className="quiz--page">
       {quizElements}
-      <button className="quiz--button">Check Answers</button>
+      <button className="quiz--button" onClick={answersChecker}>
+        Check Answers
+      </button>
     </div>
   )
 }
