@@ -5,7 +5,7 @@ export default function Answers(props) {
     const checker = props.selectChecker
 
     const styles = {
-      backgroundColor: answer.selected ? "#59E391" : "#FFF",
+      backgroundColor: answer.selected ? "#e9e6ff" : "#FFF",
     }
 
     return (
