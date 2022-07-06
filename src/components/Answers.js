@@ -1,11 +1,19 @@
-import "./Answers.css"
+import "./stylesheets/Answers.css"
 
 export default function Answers(props) {
   const answers = props.answers.map((answer) => {
     const checker = props.selectChecker
 
-    const styles = {
-      backgroundColor: answer.selected ? "#e9e6ff" : "#FFF",
+    // Styles the answer choice depending on condition
+    let styles
+    if (props.gameCheck && answer.selected) {
+      styles = {
+        backgroundColor: answer.value === props.correct ? "green" : "red",
+      }
+    } else if (answer.selected) {
+      styles = { backgroundColor: "purple" }
+    } else {
+      styles = { backgroundColor: "white" }
     }
 
     return (

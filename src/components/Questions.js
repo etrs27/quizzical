@@ -1,4 +1,4 @@
-import "./Questions.css"
+import "./stylesheets/Questions.css"
 
 export default function Questions(props) {
   return (
