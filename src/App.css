@@ -2,42 +2,38 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  text-align: center;
-  width: 750px;
-  height: 750px;
-  position: relative;
+  color: #293264;
 }
 
 main {
-  width: 750px;
-  height: 750px;
-  margin: 9px;
   z-index: 1;
 }
 
 .blob1 {
-  width: 170px;
-  height: 170px;
+  width: 120px;
+  height: 120px;
   position: fixed;
-  top: -60px;
-  right: -85px;
-
-  /* Lemony - medium */
-
-  background: #fffad1;
+  top: -35px;
+  right: -35px;
+  background-color: #fffad1;
   transform: rotate(-130deg);
 }
 
 .blob2 {
-  width: 125px;
-  height: 125px;
+  width: 120px;
+  height: 120px;
   position: fixed;
-  bottom: -30px;
-  left: -10px;
+  bottom: -35px;
+  left: -35px;
   border-radius: 100px;
-
-  /* baby - medium */
-
-  background: #deebf8;
+  background-color: #deebf8;
   transform: rotate(-10deg);
+}
+
+#copyright {
+  margin: 1%;
+  position: fixed;
+  bottom: 0;
+  right: 0;
+  color: #848493;
 }

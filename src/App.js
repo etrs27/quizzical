@@ -24,13 +24,13 @@ export default function App() {
     }
   }, [status])
 
+  // Handles starting the game
   function gameStatus() {
-    // Handles starting the game
     setStatus(!status)
   }
 
+  // Organizes fetched data
   function theQuiz(data) {
-    // Organizes fetched data
     const questions = []
     const answers = []
 
@@ -59,8 +59,8 @@ export default function App() {
     }
   }
 
+  // Selects user's answer choice
   function selectOption(answerId, selectCheck) {
-    // Selects user's answer choice
     setAllAnswers((prevAllAnswers) =>
       prevAllAnswers.map((answer) => {
         return (answer.id === answerId && !selectCheck) ||
@@ -71,8 +71,8 @@ export default function App() {
     )
   }
 
+  // Checks all questions are answered or it restarts the game
   function answerChecker() {
-    // Checks all questions are answered or it restarts the game
     const allAnswered = allAnswers.filter((answer) => answer.selected).length
     if (!gameCheck && allAnswered === allQuestions.length) {
       setGameCheck((prevGameCheck) => !prevGameCheck)
@@ -83,8 +83,8 @@ export default function App() {
     }
   }
 
+  // Handles total of correctly answered question
   const total = function count() {
-    // Handles total of correctly answered question
     const selectedAnswers = allAnswers.filter((answer) => answer.selected)
     const allCorrect = allQuestions.filter(
       (question, index) =>
@@ -93,11 +93,17 @@ export default function App() {
     return allCorrect
   }
 
+  // Dimension for confetti, if user gets a perfect score.
+  const width = "1200px"
+  const height = "1200px"
+
   return (
     <div className="App">
       <header className="blob1"></header>
       <main>
-        {gameCheck && total() === allQuestions.length && <Confetti />}
+        {gameCheck && total() === allQuestions.length && (
+          <Confetti width={width} height={height} />
+        )}
         {!status ? (
           <Start status={gameStatus} />
         ) : (
@@ -112,7 +118,12 @@ export default function App() {
           />
         )}
       </main>
-      <footer className="blob2"></footer>
+      <footer>
+        <div className="blob2"></div>
+        <p id="copyright">
+          <small>&copy; 2022 etrs27</small>
+        </p>
+      </footer>
     </div>
   )
 }

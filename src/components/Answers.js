@@ -8,12 +8,14 @@ export default function Answers(props) {
     let styles
     if (props.gameCheck && answer.selected) {
       styles = {
-        backgroundColor: answer.value === props.correct ? "green" : "red",
+        backgroundColor: answer.value === props.correct ? "#94D7A2" : "#D15656",
       }
+    } else if (props.rightAnswer && answer.value === props.correct) {
+      styles = { backgroundColor: "rgb(148, 215, 162, .4)" }
     } else if (answer.selected) {
-      styles = { backgroundColor: "purple" }
+      styles = { backgroundColor: "#D6DBF5" }
     } else {
-      styles = { backgroundColor: "white" }
+      styles = { backgroundColor: "#FFF" }
     }
 
     return (
@@ -21,7 +23,9 @@ export default function Answers(props) {
         style={styles}
         key={answer.id}
         className="quiz--answers"
-        onClick={() => props.select(answer.id, checker)}
+        onClick={
+          !props.gameCheck ? () => props.select(answer.id, checker) : undefined
+        }
       >
         {props.decode(answer.value)}
       </div>

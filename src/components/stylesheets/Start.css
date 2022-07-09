@@ -1,19 +1,24 @@
 .start--page {
-  padding: 40px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  min-height: 100vh;
 }
 
 #start--title {
-  margin: 40px;
+  margin: 0;
   font-family: "Titillium Web", sans-serif;
   font-weight: 700;
-  font-size: 34px;
+  font-size: 3.4em;
 }
 
 #start--info {
+  margin: 0 0 5% 0;
   font-family: "EB Garamond", serif;
   font-weight: 400;
-  font-size: 16px;
-  margin-bottom: 25px;
+  font-size: 1.2em;
 }
 
 #start--button {
@@ -21,8 +26,8 @@
   height: 53px;
   font-family: "EB Garamond", serif;
   font-weight: 500;
-  font-size: 16px;
+  font-size: 1.4em;
   background-color: #4d5b9e;
   color: #f5f7fb;
-  border-radius: 15px;
+  border-radius: 12px;
 }

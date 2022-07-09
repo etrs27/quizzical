@@ -1,8 +1,5 @@
-body {
+* {
   margin: 0;
-  display: flex;
-  justify-content: center;
-  background-color: #f5f7fb;
-  color: #293264;
-  z-index: 0;
+  padding: 0;
+  box-sizing: border-box;
 }

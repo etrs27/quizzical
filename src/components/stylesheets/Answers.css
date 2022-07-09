@@ -1,5 +1,13 @@
 .quiz--answers {
+  box-sizing: border-box;
+  width: 100%;
+  padding: 0.3em;
+  margin-right: 4%;
   font-family: "EB Garamond", serif;
   font-weight: 500;
-  border: 0.79px solid #dbdef0;
+  font-size: 1.1em;
+  border: 1px solid #4d5b9e;
+  border-radius: 8px;
+  line-height: 20px;
+  text-align: center;
 }
