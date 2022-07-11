@@ -1,4 +1,4 @@
-import React from "react"
+import { useState, useEffect } from "react"
 import Start from "./components/Start"
 import Quiz from "./components/Quiz"
 import Confetti from "react-confetti"
@@ -6,12 +6,12 @@ import { nanoid } from "nanoid"
 import "./App.css"
 
 export default function App() {
-  const [status, setStatus] = React.useState(false)
-  const [gameCheck, setGameCheck] = React.useState(false)
-  const [allQuestions, setAllQuestions] = React.useState([])
-  const [allAnswers, setAllAnswers] = React.useState([])
+  const [status, setStatus] = useState(false)
+  const [gameCheck, setGameCheck] = useState(false)
+  const [allQuestions, setAllQuestions] = useState([])
+  const [allAnswers, setAllAnswers] = useState([])
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (!status) {
       async function getQuiz() {
         const res = await fetch(
@@ -93,7 +93,7 @@ export default function App() {
     return allCorrect
   }
 
-  // Dimension for confetti, if user gets a perfect score.
+  // Dimensions for confetti, if the user gets a perfect score.
   const width = "1200px"
   const height = "1200px"
 
@@ -108,7 +108,6 @@ export default function App() {
           <Start status={gameStatus} />
         ) : (
           <Quiz
-            status={status}
             questions={allQuestions}
             answers={allAnswers}
             select={selectOption}

@@ -1,16 +1,24 @@
 import "./stylesheets/Answers.css"
 
-export default function Answers(props) {
-  const answers = props.answers.map((answer) => {
-    const checker = props.selectChecker
+export default function Answers({
+  quizAnswers,
+  decode,
+  correct,
+  select,
+  selectChecker,
+  gameCheck,
+  rightAnswer,
+}) {
+  const answers = quizAnswers.map((answer) => {
+    const checker = selectChecker
 
     // Styles the answer choice depending on condition
     let styles
-    if (props.gameCheck && answer.selected) {
+    if (gameCheck && answer.selected) {
       styles = {
-        backgroundColor: answer.value === props.correct ? "#94D7A2" : "#D15656",
+        backgroundColor: answer.value === correct ? "#6BC135" : "#FA2E2E",
       }
-    } else if (props.rightAnswer && answer.value === props.correct) {
+    } else if (rightAnswer && answer.value === correct) {
       styles = { backgroundColor: "rgb(148, 215, 162, .4)" }
     } else if (answer.selected) {
       styles = { backgroundColor: "#D6DBF5" }
@@ -23,11 +31,9 @@ export default function Answers(props) {
         style={styles}
         key={answer.id}
         className="quiz--answers"
-        onClick={
-          !props.gameCheck ? () => props.select(answer.id, checker) : undefined
-        }
+        onClick={!gameCheck ? () => select(answer.id, checker) : undefined}
       >
-        {props.decode(answer.value)}
+        {decode(answer.value)}
       </div>
     )
   })

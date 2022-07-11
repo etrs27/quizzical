@@ -1,9 +1,9 @@
 import "./stylesheets/Questions.css"
 
-export default function Questions(props) {
+export default function Questions({ question, decode, id }) {
   return (
-    <h3 className="quiz--questions" key={props.id}>
-      {props.decode(props.question)}
+    <h3 className="quiz--questions" key={id}>
+      {decode(question)}
     </h3>
   )
 }
