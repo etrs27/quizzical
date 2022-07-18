@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react"
 import Start from "./components/Start"
 import Quiz from "./components/Quiz"
+import CatchError from "./CatchError"
 import Confetti from "react-confetti"
 import { nanoid } from "nanoid"
 import "./App.css"
@@ -10,9 +11,10 @@ export default function App() {
   const [gameCheck, setGameCheck] = useState(false)
   const [allQuestions, setAllQuestions] = useState([])
   const [allAnswers, setAllAnswers] = useState([])
+  const [catchError, setCatchError] = useState(false)
 
   useEffect(() => {
-    if (!status) {
+    if (status) {
       async function getQuiz() {
         const res = await fetch(
           "https://opentdb.com/api.php?amount=7&difficulty=medium"
@@ -20,7 +22,7 @@ export default function App() {
         const data = await res.json()
         theQuiz(data.results)
       }
-      getQuiz()
+      getQuiz().catch(handleError)
     }
   }, [status])
 
@@ -94,8 +96,13 @@ export default function App() {
   }
 
   // Dimensions for confetti, if the user gets a perfect score.
-  const width = "1200px"
-  const height = "1200px"
+  const width = "3000px"
+  const height = "3000px"
+
+  // Error Handlers
+  function handleError() {
+    setCatchError((prevCatchError) => !prevCatchError)
+  }
 
   return (
     <div className="App">
@@ -104,9 +111,8 @@ export default function App() {
         {gameCheck && total() === allQuestions.length && (
           <Confetti width={width} height={height} />
         )}
-        {!status ? (
-          <Start status={gameStatus} />
-        ) : (
+        {!status && <Start status={gameStatus} />}
+        {!catchError && status && (
           <Quiz
             questions={allQuestions}
             answers={allAnswers}
@@ -116,6 +122,7 @@ export default function App() {
             total={total}
           />
         )}
+        {catchError && <CatchError />}
       </main>
       <footer>
         <div className="blob2"></div>

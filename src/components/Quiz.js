@@ -2,17 +2,10 @@ import Questions from "./Questions"
 import Answers from "./Answers"
 import "./stylesheets/Quiz.css"
 
-export default function Quiz({
-  questions,
-  answers,
-  select,
-  answerChecker,
-  gameCheck,
-  total,
-}) {
-  const quizElements = questions.map((question, index) => {
+export default function Quiz(props) {
+  const quizElements = props.questions.map((question, index) => {
     // Filters answers for each quiz question
-    const quizAnswers = answers.filter((answer) => {
+    const quizAnswers = props.answers.filter((answer) => {
       return answer.question_id === question.id
     })
 
@@ -21,7 +14,8 @@ export default function Quiz({
 
     // Handle highlighting the right answer, if not chosen
     const chosen = quizAnswers.filter((answer) => answer.selected)
-    const rightAnswer = gameCheck && chosen.value !== question.correct_answer
+    const rightAnswer =
+      props.gameCheck && chosen.value !== question.correct_answer
 
     // Handle unicode or special characters
     const entities = {
@@ -57,9 +51,9 @@ export default function Quiz({
             quizAnswers={quizAnswers}
             decode={decodeHTML}
             correct={question.correct_answer}
-            select={select}
+            select={props.select}
             selectChecker={selectCheck}
-            gameCheck={gameCheck}
+            gameCheck={props.gameCheck}
             rightAnswer={rightAnswer}
           />
         </div>
@@ -71,13 +65,13 @@ export default function Quiz({
     <div className="quiz--page">
       <div className="quiz--container">{quizElements}</div>
       <div className="quiz--page-bottom">
-        {gameCheck && (
+        {props.gameCheck && (
           <p id="score--display">
-            You scored {total()}/{questions.length} correct answers.
+            You scored {props.total()}/{props.questions.length} correct answers.
           </p>
         )}
-        <button className="quiz--button" onClick={answerChecker}>
-          {gameCheck ? "New Game" : "Check Answers"}
+        <button className="quiz--button" onClick={props.answerChecker}>
+          {props.gameCheck ? "New Game" : "Check Answers"}
         </button>
       </div>
     </div>

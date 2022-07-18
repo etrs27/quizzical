@@ -1,0 +1,10 @@
+.errorPage {
+  margin-top: 9%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  font-family: "Titillium Web", sans-serif;
+  font-weight: 700;
+  font-size: 1.6em;
+}
