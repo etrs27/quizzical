@@ -11,10 +11,10 @@ export default function App() {
   const [gameCheck, setGameCheck] = useState(false)
   const [allQuestions, setAllQuestions] = useState([])
   const [allAnswers, setAllAnswers] = useState([])
-  const [catchError, setCatchError] = useState(false)
+  const [catchError, setCatchError] = useState("")
 
   useEffect(() => {
-    if (status) {
+    if (!status) {
       async function getQuiz() {
         const res = await fetch(
           "https://opentdb.com/api.php?amount=7&difficulty=medium"
@@ -99,9 +99,9 @@ export default function App() {
   const width = "3000px"
   const height = "3000px"
 
-  // Error Handlers
-  function handleError() {
-    setCatchError((prevCatchError) => !prevCatchError)
+  // Error Handler
+  function handleError(err) {
+    setCatchError(err)
   }
 
   return (
