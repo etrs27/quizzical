@@ -1,64 +1,21 @@
-import { useState, useEffect } from "react"
+import { useState } from "react"
+import { useFetch } from "./useFetch"
 import Start from "./components/Start"
 import Quiz from "./components/Quiz"
 import CatchError from "./CatchError"
 import Confetti from "react-confetti"
-import { nanoid } from "nanoid"
 import "./App.css"
 
 export default function App() {
   const [status, setStatus] = useState(false)
   const [gameCheck, setGameCheck] = useState(false)
-  const [allQuestions, setAllQuestions] = useState([])
-  const [allAnswers, setAllAnswers] = useState([])
-  const [catchError, setCatchError] = useState("")
 
-  useEffect(() => {
-    if (!status) {
-      async function getQuiz() {
-        const res = await fetch(
-          "https://opentdb.com/api.php?amount=7&difficulty=medium"
-        )
-        const data = await res.json()
-        theQuiz(data.results)
-      }
-      getQuiz().catch(handleError)
-    }
-  }, [status])
+  const { allQuestions, allAnswers, catchError, setAllAnswers } =
+    useFetch(status)
 
   // Handles starting the game
   function gameStatus() {
     setStatus(!status)
-  }
-
-  // Organizes fetched data
-  function theQuiz(data) {
-    const questions = []
-    const answers = []
-
-    for (let i = 0; i < data.length; i++) {
-      let optionArr = data[i].incorrect_answers
-      optionArr.splice(
-        Math.floor(Math.random() * (optionArr.length + 1)),
-        0,
-        data[i].correct_answer
-      )
-      questions.push({
-        id: nanoid(),
-        question: data[i].question,
-        correct_answer: data[i].correct_answer,
-      })
-      for (let j = 0; j < optionArr.length; j++) {
-        answers.push({
-          id: nanoid(),
-          question_id: questions[i].id,
-          value: optionArr[j],
-          selected: false,
-        })
-      }
-      setAllQuestions(questions)
-      setAllAnswers(answers)
-    }
   }
 
   // Selects user's answer choice
@@ -98,11 +55,6 @@ export default function App() {
   // Dimensions for confetti, if the user gets a perfect score.
   const width = "3000px"
   const height = "3000px"
-
-  // Error Handler
-  function handleError(err) {
-    setCatchError(err)
-  }
 
   return (
     <div className="App">
